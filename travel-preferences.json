@@ -1,60 +1,101 @@
 {
-  "d": "EKsru4fmoUeRiFYmYB120spiQkosYW1al14kPnXh158h",
-  "$schema": "https://json-schema.org/draft-07/schema#",
-  "type": "object",
+  "$id": "EKsru4fmoUeRiFYmYB120spiQkosYW1al14kPnXh158h",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Travel Preferences Credential",
   "description": "Employee travel preferences and requirements",
+  "type": "object",
   "properties": {
+    "v": {
+      "description": "Version",
+      "type": "string"
+    },
+    "d": {
+      "description": "Digest (SAID)",
+      "type": "string"
+    },
     "i": {
-      "type": "string",
-      "description": "Identity AID"
+      "description": "Issuer AID",
+      "type": "string"
     },
-    "employeeId": {
-      "type": "string",
-      "description": "Employee identifier"
+    "ri": {
+      "description": "Registry identifier",
+      "type": "string"
     },
-    "seatPreference": {
-      "type": "string",
-      "enum": [
-        "window",
-        "aisle",
-        "middle",
-        "any"
+    "s": {
+      "description": "Schema SAID",
+      "type": "string"
+    },
+    "a": {
+      "description": "Attribute section",
+      "type": "object",
+      "properties": {
+        "i": {
+          "description": "Recipient AID",
+          "type": "string"
+        },
+        "dt": {
+          "description": "Issuance date time",
+          "type": "string",
+          "format": "date-time"
+        },
+        "employeeId": {
+          "type": "string",
+          "description": "Employee identifier"
+        },
+        "seatPreference": {
+          "type": "string",
+          "enum": [
+            "window",
+            "aisle",
+            "middle",
+            "any"
+          ],
+          "description": "Seat preference"
+        },
+        "mealPreference": {
+          "type": "string",
+          "enum": [
+            "standard",
+            "regular",
+            "vegetarian",
+            "vegan",
+            "kosher",
+            "halal",
+            "gluten-free",
+            "none"
+          ],
+          "description": "Meal preference"
+        },
+        "airlines": {
+          "type": "string",
+          "description": "Preferred airlines"
+        },
+        "emergencyContact": {
+          "type": "string",
+          "description": "Emergency contact information"
+        },
+        "allergies": {
+          "type": "string",
+          "description": "Allergies and dietary restrictions"
+        }
+      },
+      "required": [
+        "i",
+        "dt",
+        "employeeId",
+        "seatPreference",
+        "mealPreference"
       ],
-      "description": "Seat preference"
-    },
-    "mealPreference": {
-      "type": "string",
-      "enum": [
-        "standard",
-        "regular",
-        "vegetarian",
-        "vegan",
-        "kosher",
-        "halal",
-        "gluten-free",
-        "none"
-      ],
-      "description": "Meal preference"
-    },
-    "airlines": {
-      "type": "string",
-      "description": "Preferred airlines"
-    },
-    "emergencyContact": {
-      "type": "string",
-      "description": "Emergency contact information"
-    },
-    "allergies": {
-      "type": "string",
-      "description": "Allergies and dietary restrictions"
+      "additionalProperties": false
     }
   },
   "required": [
+    "v",
+    "d",
     "i",
-    "employeeId",
-    "seatPreference",
-    "mealPreference"
+    "ri",
+    "s",
+    "a"
   ],
   "additionalProperties": false
 }

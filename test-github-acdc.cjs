@@ -20,7 +20,7 @@ async function testGitHubPagesACDC() {
   console.log(`Schema URL: ${GITHUB_SCHEMA_URLS['travel-preferences']}`);
   console.log('');
 
-  if (GITHUB_USERNAME === 'YOUR-USERNAME') {
+  if (GITHUB_USERNAME === 'YOUR-USERNAME-OLD') {
     console.log('❌ Please update GITHUB_USERNAME in this file with your actual GitHub username!');
     console.log('   Edit line 7: const GITHUB_USERNAME = "your-actual-username";');
     return;

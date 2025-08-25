@@ -5,86 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travlr-ID ACDC Schemas</title>
     <style>
-        body { 
-            font-family: 'Segoe UI', sans-serif; 
-            max-width: 800px; 
-            margin: 2rem auto; 
-            padding: 2rem; 
-            background: #f8f9fa;
-            line-height: 1.6;
-        }
-        .container { 
-            background: white; 
-            padding: 2rem; 
-            border-radius: 8px; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
-        }
-        h1 { color: #2c3e50; margin-bottom: 1rem; }
-        .schema-card { 
-            background: #f8f9fa; 
-            padding: 1rem; 
-            margin: 1rem 0; 
-            border-left: 4px solid #3498db; 
-            border-radius: 4px;
-        }
-        .schema-url { 
-            font-family: monospace; 
-            background: #e9ecef; 
-            padding: 0.5rem; 
-            border-radius: 4px; 
-            word-break: break-all;
-        }
-        .status { color: #27ae60; font-weight: bold; }
-        .copy-btn { 
-            background: #3498db; 
-            color: white; 
-            border: none; 
-            padding: 0.5rem 1rem; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            margin-left: 0.5rem;
-        }
-        .copy-btn:hover { background: #2980b9; }
-        .usage { background: #fff3cd; padding: 1rem; border-radius: 4px; margin-top: 2rem; }
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .schema { background: #f5f5f5; padding: 20px; margin: 20px 0; border-radius: 8px; }
+        .said { font-family: monospace; background: #e0e0e0; padding: 4px 8px; border-radius: 4px; word-break: break-all; }
+        .url { font-family: monospace; background: #d4edda; padding: 4px 8px; border-radius: 4px; }
+        pre { background: #f8f9fa; padding: 15px; border-radius: 5px; overflow-x: auto; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🔐 Travlr-ID ACDC Schemas</h1>
-        <p class="status">Status: Production Ready ✅</p>
-        <p>Self-Addressing Identifier (SAID) based schemas for KERI/ACDC credentials</p>
+    <h1>🌐 Travlr-ID ACDC Schemas</h1>
+    <p>Production-hosted schemas for KERI ACDC credential issuance</p>
+    
+    <div class="schema">
+        <h3>📋 Travel Preferences Schema</h3>
+        <p><strong>URL:</strong> <span class="url">https://YOUR-USERNAME.github.io/travlr-schemas/travel-preferences.json</span></p>
+        <p><strong>SAID:</strong> <span class="said">EKsru4fmoUeRiFYmYB120spiQkosYW1al14kPnXh158h</span></p>
+        <p><a href="./travel-preferences.json" target="_blank">View Schema →</a></p>
+    </div>
+    
+    <div class="schema">
+        <h3>👤 Employee Credential Schema</h3>
+        <p><strong>URL:</strong> <span class="url">https://YOUR-USERNAME.github.io/travlr-schemas/employee-credential.json</span></p>
+        <p><strong>SAID:</strong> <span class="said">EJzStfcj5F0NQdI2uqfXmmGMeAhb6qW1MBEkS_OO_XNg</span></p>
+        <p><a href="./employee-credential.json" target="_blank">View Schema →</a></p>
+    </div>
+    
+    <h2>🔧 Usage in KERIA</h2>
+    <pre><code>// Load schemas via OOBI
+await client.oobis().resolve('https://YOUR-USERNAME.github.io/travlr-schemas/travel-preferences.json', 'schema');
+await client.oobis().resolve('https://YOUR-USERNAME.github.io/travlr-schemas/employee-credential.json', 'schema');
 
-        <div class="schema-card">
-            <h3>📋 Travel Preferences Schema</h3>
-            <p><strong>SAID:</strong> <code>EKsru4fmoUeRiFYmYB120spiQkosYW1al14kPnXh158h</code></p>
-            <div class="schema-url">
-                <span id="travel-url">https://nikhlu07.github.io/-travlr-schemas/travel-preferences.json</span>
-                <button class="copy-btn" onclick="copyUrl('travel-url')">Copy</button>
-            </div>
-            <p><a href="travel-preferences.json" target="_blank">View Schema JSON</a></p>
-        </div>
-
-        <div class="schema-card">
-            <h3>👤 Employee Credential Schema</h3>
-            <p><strong>SAID:</strong> <code>EJzStfcj5F0NQdI2uqfXmmGMeAhb6qW1MBEkS_OO_XNg</code></p>
-            <div class="schema-url">
-                <span id="employee-url">https://nikhlu07.github.io/-travlr-schemas/employee-credential.json</span>
-                <button class="copy-btn" onclick="copyUrl('employee-url')">Copy</button>
-            </div>
-            <p><a href="employee-credential.json" target="_blank">View Schema JSON</a></p>
-        </div>
-
-        <div class="usage">
-            <h3>🔧 Usage in SignifyTS</h3>
-            <pre><code>// Resolve schema OOBI
-const oobiOp = await client.oobis().resolve(
-  'https://nikhlu07.github.io/-travlr-schemas/travel-preferences.json'
-);
-
-// Wait for resolution
-await client.operations().wait(oobiOp);
-
-// Create ACDC credential
+// Issue credential with schema
 const credential = await client.credentials().issue(aidName, {
   ri: registryId,
   s: 'EKsru4fmoUeRiFYmYB120spiQkosYW1al14kPnXh158h',
@@ -92,48 +43,23 @@ const credential = await client.credentials().issue(aidName, {
     i: identity.prefix,
     employeeId: 'EMP001',
     seatPreference: 'window',
-    mealPreference: 'vegetarian'
-    // ...
+    mealPreference: 'vegetarian',
+    airlines: 'Production Airways',
+    emergencyContact: 'Emergency Contact',
+    allergies: 'None'
   }
 });</code></pre>
-        </div>
-
-        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #eee;">
-            <h3>📚 Documentation</h3>
-            <ul>
-                <li><a href="https://github.com/WebOfTrust/keri">KERI Protocol</a></li>
-                <li><a href="https://trustoverip.github.io/tswg-acdc-specification/">ACDC Specification</a></li>
-                <li><a href="https://github.com/WebOfTrust/signify-ts">SignifyTS</a></li>
-            </ul>
-            
-            <p><small>Generated: <span id="timestamp"></span></small></p>
-        </div>
-    </div>
-
-    <script>
-        // Set timestamp
-        document.getElementById('timestamp').textContent = new Date().toISOString();
-
-        // Copy URL function
-        function copyUrl(elementId) {
-            const element = document.getElementById(elementId);
-            navigator.clipboard.writeText(element.textContent).then(() => {
-                const btn = element.nextElementSibling;
-                const originalText = btn.textContent;
-                btn.textContent = 'Copied!';
-                btn.style.background = '#27ae60';
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.style.background = '#3498db';
-                }, 2000);
-            });
-        }
-
-        // Update URLs with actual GitHub username (you'll need to replace YOUR-USERNAME)
-        const githubUsername = 'YOUR-USERNAME'; // Replace this manually
-        document.querySelectorAll('.schema-url span').forEach(span => {
-            span.textContent = span.textContent.replace('YOUR-USERNAME', githubUsername);
-        });
-    </script>
+    
+    <h2>📋 Setup Instructions</h2>
+    <ol>
+        <li>Create GitHub repository: <code>travlr-schemas</code></li>
+        <li>Upload these files to the repository</li>
+        <li>Enable GitHub Pages in repository settings</li>
+        <li>Wait 5-10 minutes for deployment</li>
+        <li>Replace YOUR-USERNAME with your GitHub username</li>
+        <li>Update your app configuration</li>
+    </ol>
+    
+    <p><em>Generated on 2025-08-24T08:00:28.741Z</em></p>
 </body>
 </html>
