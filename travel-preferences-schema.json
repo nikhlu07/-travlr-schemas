@@ -1,8 +1,8 @@
 {
-  "$id": "https://schema.travlr.com/travlr-travel-attributes-v1.json",
+  "$id": "https://schema.travlr.com/travlr-travel-preferences-v1.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Travlr Travel Attributes",
-  "description": "Schema for ACDC attributes block containing travel data",
+  "title": "Travlr Travel Preferences",
+  "description": "Schema for ACDC attributes block containing employee travel preferences",
   "type": "object",
   "properties": {
     "d": {
@@ -22,27 +22,16 @@
       "type": "string",
       "description": "Employee identifier"
     },
-    "profile": {
-      "type": "object",
-      "properties": {
-        "fullName": {"type": "string"},
-        "department": {"type": "string"},
-        "email": {"type": "string", "format": "email"},
-        "employeeLevel": {"type": "string", "enum": ["staff", "senior", "manager", "director"]}
-      },
-      "required": ["fullName", "department", "email"],
-      "additionalProperties": false
-    },
     "travelPreferences": {
       "type": "object",
       "properties": {
         "flight": {
           "type": "object",
           "properties": {
-            "airlines": {"type": "array", "items": {"type": "string"}},
-            "seatPreference": {"type": "string", "enum": ["window", "aisle", "no-preference"]},
-            "classPreference": {"type": "string", "enum": ["economy", "business", "first"]},
-            "mealPreference": {"type": "string"}
+            "airlines": { "type": "array", "items": { "type": "string" } },
+            "seatPreference": { "type": "string", "enum": ["window", "aisle", "middle", "no-preference"] },
+            "classPreference": { "type": "string", "enum": ["economy", "premium-economy", "business", "first"] },
+            "mealPreference": { "type": "string" }
           },
           "required": ["seatPreference", "classPreference", "mealPreference"],
           "additionalProperties": false
@@ -50,9 +39,9 @@
         "accommodation": {
           "type": "object",
           "properties": {
-            "hotelChains": {"type": "array", "items": {"type": "string"}},
-            "roomType": {"type": "string", "enum": ["standard", "suite", "accessible"]},
-            "smokingPreference": {"type": "string", "enum": ["non-smoking", "smoking"]}
+            "hotelChains": { "type": "array", "items": { "type": "string" } },
+            "roomType": { "type": "string", "enum": ["standard", "suite", "accessible"] },
+            "smokingPreference": { "type": "string", "enum": ["non-smoking", "smoking"] }
           },
           "required": ["roomType", "smokingPreference"],
           "additionalProperties": false
@@ -60,17 +49,17 @@
         "dining": {
           "type": "object",
           "properties": {
-            "dietaryRestrictions": {"type": "array", "items": {"type": "string"}},
-            "allergies": {"type": "array", "items": {"type": "string"}}
+            "dietaryRestrictions": { "type": "array", "items": { "type": "string" } },
+            "allergies": { "type": "array", "items": { "type": "string" } }
           },
           "additionalProperties": false
         },
         "accessibility": {
           "type": "object",
           "properties": {
-            "mobilityNeeds": {"type": "array", "items": {"type": "string"}},
-            "visualNeeds": {"type": "array", "items": {"type": "string"}},
-            "hearingNeeds": {"type": "array", "items": {"type": "string"}}
+            "mobilityNeeds": { "type": "array", "items": { "type": "string" } },
+            "visualNeeds": { "type": "array", "items": { "type": "string" } },
+            "hearingNeeds": { "type": "array", "items": { "type": "string" } }
           },
           "additionalProperties": false
         },
@@ -80,10 +69,10 @@
             "primaryContact": {
               "type": "object",
               "properties": {
-                "name": {"type": "string"},
-                "phone": {"type": "string"},
-                "relationship": {"type": "string"},
-                "email": {"type": "string", "format": "email"}
+                "name": { "type": "string" },
+                "phone": { "type": "string" },
+                "relationship": { "type": "string" },
+                "email": { "type": "string", "format": "email" }
               },
               "required": ["name", "phone", "relationship"],
               "additionalProperties": false
@@ -98,13 +87,13 @@
     "authorization": {
       "type": "object",
       "properties": {
-        "level": {"type": "string", "enum": ["basic", "extended", "full"]},
-        "restrictions": {"type": "array", "items": {"type": "string"}},
-        "validUntil": {"type": "string", "format": "date-time"}
+        "level": { "type": "string", "enum": ["basic", "extended", "full"] },
+        "restrictions": { "type": "array", "items": { "type": "string" } },
+        "validUntil": { "type": "string", "format": "date-time" }
       },
       "additionalProperties": false
     }
   },
-  "required": ["d", "i", "dt", "employeeId", "profile", "travelPreferences"],
+  "required": ["d", "i", "dt", "employeeId", "travelPreferences"],
   "additionalProperties": false
 }
