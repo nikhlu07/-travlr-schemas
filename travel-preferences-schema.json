@@ -1,0 +1,110 @@
+{
+  "$id": "https://schema.travlr.com/travlr-travel-attributes-v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Travlr Travel Attributes",
+  "description": "Schema for ACDC attributes block containing travel data",
+  "type": "object",
+  "properties": {
+    "d": {
+      "type": "string",
+      "description": "Attributes block SAID"
+    },
+    "i": {
+      "type": "string", 
+      "description": "Subject AID (employee)"
+    },
+    "dt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Issuance datetime"
+    },
+    "employeeId": {
+      "type": "string",
+      "description": "Employee identifier"
+    },
+    "profile": {
+      "type": "object",
+      "properties": {
+        "fullName": {"type": "string"},
+        "department": {"type": "string"},
+        "email": {"type": "string", "format": "email"},
+        "employeeLevel": {"type": "string", "enum": ["staff", "senior", "manager", "director"]}
+      },
+      "required": ["fullName", "department", "email"],
+      "additionalProperties": false
+    },
+    "travelPreferences": {
+      "type": "object",
+      "properties": {
+        "flight": {
+          "type": "object",
+          "properties": {
+            "airlines": {"type": "array", "items": {"type": "string"}},
+            "seatPreference": {"type": "string", "enum": ["window", "aisle", "no-preference"]},
+            "classPreference": {"type": "string", "enum": ["economy", "business", "first"]},
+            "mealPreference": {"type": "string"}
+          },
+          "required": ["seatPreference", "classPreference", "mealPreference"],
+          "additionalProperties": false
+        },
+        "accommodation": {
+          "type": "object",
+          "properties": {
+            "hotelChains": {"type": "array", "items": {"type": "string"}},
+            "roomType": {"type": "string", "enum": ["standard", "suite", "accessible"]},
+            "smokingPreference": {"type": "string", "enum": ["non-smoking", "smoking"]}
+          },
+          "required": ["roomType", "smokingPreference"],
+          "additionalProperties": false
+        },
+        "dining": {
+          "type": "object",
+          "properties": {
+            "dietaryRestrictions": {"type": "array", "items": {"type": "string"}},
+            "allergies": {"type": "array", "items": {"type": "string"}}
+          },
+          "additionalProperties": false
+        },
+        "accessibility": {
+          "type": "object",
+          "properties": {
+            "mobilityNeeds": {"type": "array", "items": {"type": "string"}},
+            "visualNeeds": {"type": "array", "items": {"type": "string"}},
+            "hearingNeeds": {"type": "array", "items": {"type": "string"}}
+          },
+          "additionalProperties": false
+        },
+        "emergency": {
+          "type": "object",
+          "properties": {
+            "primaryContact": {
+              "type": "object",
+              "properties": {
+                "name": {"type": "string"},
+                "phone": {"type": "string"},
+                "relationship": {"type": "string"},
+                "email": {"type": "string", "format": "email"}
+              },
+              "required": ["name", "phone", "relationship"],
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": ["flight", "accommodation"],
+      "additionalProperties": false
+    },
+    "authorization": {
+      "type": "object",
+      "properties": {
+        "level": {"type": "string", "enum": ["basic", "extended", "full"]},
+        "restrictions": {"type": "array", "items": {"type": "string"}},
+        "validUntil": {"type": "string", "format": "date-time"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["d", "i", "dt", "employeeId", "profile", "travelPreferences"],
+  "additionalProperties": false
+}
