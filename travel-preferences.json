@@ -1,16 +1,22 @@
 {
   "$id": "EKsru4fmoUeRiFYmYB120spiQkosYW1al14kPnXh158h",
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Travel Preferences Credential",
-  "description": "Employee travel preferences and requirements",
+  "description": "Employee travel preferences and requirements for ACDC credentials",
   "type": "object",
+  "credentialType": "TravelPreferencesCredential",
+  "version": "1.0.0",
   "properties": {
     "v": {
       "description": "Version",
       "type": "string"
     },
     "d": {
-      "description": "Digest (SAID)",
+      "description": "Credential SAID",
+      "type": "string"
+    },
+    "u": {
+      "description": "One time use nonce",
       "type": "string"
     },
     "i": {
@@ -18,7 +24,7 @@
       "type": "string"
     },
     "ri": {
-      "description": "Registry identifier",
+      "description": "Credential status registry",
       "type": "string"
     },
     "s": {
@@ -26,69 +32,84 @@
       "type": "string"
     },
     "a": {
-      "description": "Attribute section",
-      "type": "object",
-      "properties": {
-        "i": {
-          "description": "Recipient AID",
+      "oneOf": [
+        {
+          "description": "Attributes block SAID",
           "type": "string"
         },
-        "dt": {
-          "description": "Issuance date time",
-          "type": "string",
-          "format": "date-time"
-        },
-        "employeeId": {
-          "type": "string",
-          "description": "Employee identifier"
-        },
-        "seatPreference": {
-          "type": "string",
-          "enum": [
-            "window",
-            "aisle",
-            "middle",
-            "any"
-          ],
-          "description": "Seat preference"
-        },
-        "mealPreference": {
-          "type": "string",
-          "enum": [
-            "standard",
-            "regular",
-            "vegetarian",
-            "vegan",
-            "kosher",
-            "halal",
-            "gluten-free",
-            "none"
-          ],
-          "description": "Meal preference"
-        },
-        "airlines": {
-          "type": "string",
-          "description": "Preferred airlines"
-        },
-        "emergencyContact": {
-          "type": "string",
-          "description": "Emergency contact information"
-        },
-        "allergies": {
-          "type": "string",
-          "description": "Allergies and dietary restrictions"
+        {
+          "$id": "EKsru4fmoUeRiFYmYB120spiQkosYW1al14kPnXh158h-attr",
+          "description": "Travel preferences attributes",
+          "type": "object",
+          "properties": {
+            "d": {
+              "description": "Attributes block SAID",
+              "type": "string"
+            },
+            "i": {
+              "description": "Employee AID",
+              "type": "string"
+            },
+            "dt": {
+              "description": "Issuance date time",
+              "type": "string",
+              "format": "date-time"
+            },
+            "employeeId": {
+              "type": "string",
+              "description": "Employee identifier"
+            },
+            "seatPreference": {
+              "type": "string",
+              "enum": [
+                "window",
+                "aisle",
+                "middle",
+                "any"
+              ],
+              "description": "Seat preference"
+            },
+            "mealPreference": {
+              "type": "string",
+              "enum": [
+                "standard",
+                "regular",
+                "vegetarian",
+                "vegan",
+                "kosher",
+                "halal",
+                "gluten-free",
+                "none"
+              ],
+              "description": "Meal preference"
+            },
+            "airlines": {
+              "type": "string",
+              "description": "Preferred airlines"
+            },
+            "emergencyContact": {
+              "type": "string",
+              "description": "Emergency contact information"
+            },
+            "allergies": {
+              "type": "string",
+              "description": "Allergies and dietary restrictions"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "d",
+            "i",
+            "dt",
+            "employeeId",
+            "seatPreference",
+            "mealPreference"
+          ]
         }
-      },
-      "required": [
-        "i",
-        "dt",
-        "employeeId",
-        "seatPreference",
-        "mealPreference"
-      ],
-      "additionalProperties": false
+      ]
     }
   },
+  "additionalProperties": false,
   "required": [
     "v",
     "d",
@@ -96,6 +117,5 @@
     "ri",
     "s",
     "a"
-  ],
-  "additionalProperties": false
+  ]
 }
